@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>user_entry</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+<div id="user_entry">
+    <form id="form" action="">
+    <input type="button" id="button" value="追加"><br/>
+    Label<input type="text" name="Label"><br />
+    UserID<input type="text" name="UserID"><br />
+    SlackID<input type="text" name="SlackID"><br />
+    UserType<input type="text" name="UserType"><br />
+    BacklogAssinee<input type="text" name="BacklogAssinee"><br />
+    BacklogAssineeID<input type="text" name="BacklogAssineeID"><br />
+    PhoneNumber<input type="text" name="PhoneNumber"><br />
+    InternationalNumber<input type="text" name="InternationalNumber"><br />
+    Delete<input type="checkbox" name="Delete" value="true"><br />
+
+    </form>
+    <div id="message"></div>
+    <div id="disp"></div>
+    <script>
+    $( function() {
+
+        var apiUrl = '<API GaateWayで作成するAPI>';
+
+        $('#button').click(
+            function(){
+
+                var formData = $("#form").serialize();
+                console.log("formData:" + formData);
+                $.ajax({
+                    url:apiUrl, // 通信先のURL
+                    type:'POST',// 使用するHTTPメソッド (GET/ POST)
+                    data:formData, // 送信するデー
+                    dataType:'json', // 応答のデータの種類 (xml/html/script/json/jsonp/text)
+                    contentType: "application/json",
+                    // 通信に成功した時に実行される
+                    }).done(function(response,textStatus,jqXHR) {
+                        console.log("成功:" + jqXHR.status);
+
+                        var getData = {
+                            Label: response.data.Label,
+                            UserID: response.data.UserID,
+                            SlackID: response.data.SlackID,
+                            UserType: response.data.UserType, 
+                            BacklogAssinee: response.data.BacklogAssine,
+                            PhoneNumber: response.data.PhoneNumber,
+                            InternationalNumber: response.data.InternationalNumber
+                            };
+
+                        if (response.completed == 1)
+                        {
+                            $('#message').html('通信に成功しました');
+                            console.log(response.data.Label);
+
+                            $.each(getData, function(key, value){
+                                $("#disp").append(key + ":" + value).append('<br />');
+                            })
+
+
+                        }
+                        else if(response.completed == 0)
+                        {
+                            $('#message').html('サーバーの内部エラーのため登録が失敗しました。');
+                        }
+
+                     // 通信に失敗した時に実行される
+                    }).fail(function(jqXHR, textStatus, errorThrown) {
+                        console.log("失敗:" + jqXHR.status);
+                    });
+            });
+    });
+    </script>
+</div>
+
+</body>
+</html>
+
+

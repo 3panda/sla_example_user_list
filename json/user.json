@@ -1,0 +1,34 @@
+[
+    {
+        "Label": "ユーザーA",
+        "UserID": "user_a",
+        "SlackID": "user_a",
+        "UserType": "社内ユーザー",
+        "BacklogAssinee": "社内ユーザー",
+        "BacklogAssineeID": "123456789",
+        "PhoneNumber": "08012345678",
+        "InternationalNumber": "+818012345678",
+        "Delete": "false"
+    },
+    {
+        "Label": "ユーザーB",
+        "UserID": "user_b",
+        "SlackID": "user_b",
+        "UserType": "社内ユーザー",
+        "BacklogAssinee": "社内ユーザー",
+        "BacklogAssineeID": "223456789",
+        "PhoneNumber": "09012345678",
+        "InternationalNumber": "+918012345678",
+        "Delete": "false"
+    },
+    {
+        "Label": "ユーザーC",
+        "UserID": "user_c",
+        "SlackID": "user_c",
+        "UserType": "社内ユーザー",
+        "BacklogAssinee": "社内ユーザー",
+        "BacklogAssineeID": "222222222",
+        "PhoneNumber": "08022222222",
+        "InternationalNumber": "+818022222222",
+        "Delete": "false"
+    }

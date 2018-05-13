@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>user-list</title>
+<link rel="stylesheet" type="text/css" href="css/index.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var apiUpdate = function()
+{
+    var apiUrl = '<API GaateWayで作成するAPI>';
+    $.ajax({
+        url:apiUrl, // 通信先のURL
+        type:'GET',// 使用するHTTPメソッド (GET/ POST)
+        dataType:'json', // 応答のデータの種類 (xml/html/script/json/jsonp/text)
+        contentType: "application/json",
+        // 通信に成功した時に実行される
+        }).done(function(response,textStatus,jqXHR) {
+            console.log("成功:" + jqXHR.status);
+            console.log(response);
+
+
+            if (response.completed == 1)
+            {
+                //$('#message').html('登録を完了しました。');
+                console.log(response.data[0]);
+
+                var rows = '';
+
+                $.each(response.data, function(index, val) {
+                    console.log(this.Label);
+                    rows += "<tr>";
+                    rows += "<td>";
+                    rows += this.Label;
+                    rows += "</td>";
+                    rows += "<td>";
+                    rows += this.UserID;
+                    rows += "</td>";
+                    rows += "<td>";
+                    rows += this.SlackID;
+                    rows += "</td>";
+                    rows += "<td>";
+                    rows += this.BacklogAssinee + "(" + this.BacklogAssineeID + ")" ;
+                    rows += "</td>";
+                    rows += "<td>";
+                    rows += this.PhoneNumber;
+                    rows += "</td>";
+                    rows += "<td>";
+                    rows += this.UserType;
+                    rows += "</td>";
+                    rows += "</tr>";
+                });
+
+            $("#user-list").append(rows);
+
+            }
+            else if(response.completed == 0)
+            {
+                $('#message').html('サーバーの内部エラーのため登録が失敗しました。');
+            }
+
+         // 通信に失敗した時に実行される
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.log("失敗:" + jqXHR.status);
+        });
+}
+
+
+
+$(function() {
+    apiUpdate();
+});
+
+
+</script>
+</head>
+<body>
+    <table id="user-list">
+        <tr>
+            <th>Label</th>
+            <th>User ID</th>
+            <th>Slack ID</th>
+            <th>Backlog Assignee</th>
+            <th>Phone Number</th>
+            <th>User Type</th>
+        </tr>
+    </table>
+    <div id="message"></div>
+    <a href="user_entry.html" id="open">ユーザーの作成</a>
+</body>
+</html>
